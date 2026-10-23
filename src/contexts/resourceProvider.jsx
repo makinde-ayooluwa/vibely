@@ -1,0 +1,31 @@
+import { createContext, useContext } from "react";
+
+const ResourceContext = createContext();
+
+export const ResourceProvider = ({ children }) => {
+    const blogs = [
+        {
+            user: {
+                name: "Makinde Ayooluwa",
+            },
+            title: "Blog title test",
+            text: "Lorem ipsum dolet elem det erep dolem du ledem",
+            image: "",
+            video: "",
+            images: [
+                "",
+                ""
+            ],
+            createdAt: "23-10-2026 14:00:00",
+        }
+    ];
+    return (
+        <ResourceContext.Provider value={{ blogs }}>
+            {children}
+        </ResourceContext.Provider>
+    )
+}
+
+export const useResource = () => {
+    return useContext(ResourceContext);
+}
