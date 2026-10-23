@@ -45,6 +45,17 @@ const TabsLayout = () => {
         },
         headerTransparent: true
       }} />
+      <Tabs.Screen name='chat' options={{
+        tabBarIcon: ({ focused }) => (
+          <Ionicons size={20} name={focused ? 'chatbubble' : 'chatbubble-outline'} />
+        ),
+        tabBarShowLabel: false,
+        headerShadowVisible: false,
+        headerTitle: "Chat",
+        headerTitleStyle: {
+          fontSize: 25
+        },
+      }} />
     </Tabs>
   )
 }
