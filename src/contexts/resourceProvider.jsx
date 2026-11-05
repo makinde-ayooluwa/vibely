@@ -75,8 +75,25 @@ export const ResourceProvider = ({ children }) => {
             createdAt: "23-10-2026 14:00:00",
         },
     ];
+    const videos = [
+  { 
+    id: '1', 
+    title: 'Store Grand Opening Highlight', 
+    uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4' 
+  },
+  { 
+    id: '2', 
+    title: 'New Collection Showcase', 
+    uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4' 
+  },
+  { 
+    id: '3', 
+    title: 'Behind the Scenes Packaging', 
+    uri: 'https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4' 
+  },
+];
     return (
-        <ResourceContext.Provider value={{ blogs }}>
+        <ResourceContext.Provider value={{ blogs, videos }}>
             {children}
         </ResourceContext.Provider>
     )
