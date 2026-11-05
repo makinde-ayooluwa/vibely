@@ -10,6 +10,140 @@ const HomeScreen = () => {
   const { width } = Dimensions.get("window")
   const [blogFinished, setFinished] = useState(false);
   const { blogs } = useResource();
+  const Placeholder = "https://via.placeholder.com/150";
+
+  const PostCard = ({ item, onLike, onComment }) => {
+    const [isExpanded, setIsExpanded] = useState(false);
+    const [likes, setLikes] = useState(item.likes || 0);
+    const [isLiked, setIsLiked] = useState(false);
+    const [showCommentInput, setShowCommentInput] = useState(false);
+    const [commentText, setCommentText] = useState("");
+    const [comments, setComments] = useState(item.comments || []);
+
+    const maxLength = 300;
+    const shouldTruncate = item.text.length > maxLength;
+    const displayedText = !isExpanded && shouldTruncate
+      ? item.text.substring(0, maxLength) + "..."
+      : item.text;
+
+    const handleLikeToggle = () => {
+      if (isLiked) {
+        setLikes(likes - 1);
+        setIsLiked(false);
+      } else {
+        setLikes(likes + 1);
+        setIsLiked(true);
+      }
+    };
+
+    const handleAddComment = () => {
+      if (!commentText.trim()) return;
+      setComments([...comments, { id: Date.now(), text: commentText, author: "Store Owner" }]);
+      setCommentText("");
+      setShowCommentInput(false);
+    };
+
+    return (
+      <View className="mb-4 bg-white border-b-[5px] border-gray-200 shadow-sm">
+        {/* Post Header */}
+        <View className="p-3 border-b border-gray-100">
+          <View className="flex-row items-center gap-3">
+            <Image
+              source={{ uri: item?.user?.avatar || Placeholder }}
+              style={{ width: 40, height: 40 }}
+              className="border border-gray-300 rounded-full"
+              resizeMode='cover'
+            />
+            <View>
+              <Text className="font-bold text-[15px] text-gray-900">{item?.user?.name || "Store Update"}</Text>
+              <View className="flex-row items-center gap-1 mt-0.5">
+                <Ionicons name='time-outline' size={12} color="gray" />
+                <Text className="text-xs text-gray-500">{item?.createdAt}</Text>
+              </View>
+            </View>
+          </View>
+        </View>
+
+        {/* Post Body / Text */}
+        <View className="p-3">
+          <Text className="leading-relaxed text-gray-800">
+            {displayedText}
+          </Text>
+          {shouldTruncate && (
+            <Pressable onPress={() => setIsExpanded(!isExpanded)} className="mt-2">
+              <Text className="font-semibold text-blue-600">
+                {isExpanded ? "Show less" : "...see more"}
+              </Text>
+            </Pressable>
+          )}
+        </View>
+
+        {/* Post Media / Image (if available) */}
+        {item?.image && (
+          <View className="bg-black">
+            <Image
+              source={{ uri: item.image }}
+              style={{ width: "100%", height: 250 }}
+              resizeMode='cover'
+            />
+          </View>
+        )}
+
+        {/* Interaction Stats */}
+        <View className="flex-row justify-between px-4 py-2 text-xs text-gray-500 border-t border-gray-100">
+          <Text>{likes} Likes</Text>
+          <Text>{comments.length} Comments</Text>
+        </View>
+
+        {/* Action Footer */}
+        <View className="flex-row justify-around py-1 border-t border-gray-200 bg-gray-50">
+          <Pressable onPress={handleLikeToggle} className="flex-row items-center gap-2 p-2">
+            <Ionicons size={20} name={isLiked ? 'thumbs-up' : 'thumbs-up-outline'} color={isLiked ? '#2563eb' : '#4b5563'} />
+            <Text className={isLiked ? "text-blue-600 font-medium" : "text-gray-600"}>Like</Text>
+          </Pressable>
+
+          <Pressable onPress={() => setShowCommentInput(!showCommentInput)} className="flex-row items-center gap-2 p-2">
+            <Ionicons size={20} name='chatbox-ellipses-outline' color="#4b5563" />
+            <Text className="text-gray-600">Comment</Text>
+          </Pressable>
+
+          <Pressable className="flex-row items-center gap-2 p-2">
+            <Ionicons size={20} name='arrow-redo-outline' color="#4b5563" />
+            <Text className="text-gray-600">Share</Text>
+          </Pressable>
+        </View>
+
+        {/* Comment Input Section */}
+        {showCommentInput && (
+          <View className="p-3 border-t border-gray-200 bg-gray-50">
+            <View className="flex-row gap-2">
+              <TextInput
+                className="flex-1 px-3 py-2 text-sm bg-white border border-gray-300 rounded-lg"
+                placeholder="Write a comment..."
+                value={commentText}
+                onChangeText={setCommentText}
+              />
+              <Pressable onPress={handleAddComment} className="justify-center px-4 py-2 bg-blue-600 rounded-lg">
+                <Text className="text-sm font-semibold text-white">Post</Text>
+              </Pressable>
+            </View>
+
+            {/* Render Comments */}
+            {comments.length > 0 && (
+              <View className="gap-2 mt-3">
+                {comments.map((c) => (
+                  <View key={c.id} className="p-2 bg-white border border-gray-200 rounded">
+                    <Text className="text-xs font-bold text-gray-700">{c.author}</Text>
+                    <Text className="text-sm text-gray-800">{c.text}</Text>
+                  </View>
+                ))}
+              </View>
+            )}
+          </View>
+        )}
+      </View>
+    );
+  };
   return (
     <>
       <CustomView style={{}} className="">
@@ -24,44 +158,7 @@ const HomeScreen = () => {
             </View>
           )}
           renderItem={({ item }) => (
-            <View className="border-b-[5px] border-gray-400">
-              <View className="p-3 border-b">
-                <View className="items-center gap-2 justify-start" style={{
-                  flexDirection: "row"
-                }}>
-                  <Image source={Placeholder} style={{
-                    width: 40,
-                    height: 40,
-                  }} className="border-2 border-gray-300 rounded-full"
-                    resizeMode='contain'
-                  />
-                  <View className="grid gap-2">
-                    <Text className="font-bold text-[15px]">{item.user.name}</Text>
-                    <Text> <Ionicons name='locate' /> {item.createdAt}</Text>
-                  </View>
-                </View>
-              </View>
-              <View>
-                <Text>
-                  {!item?.seeMore ? item.text.substring(0, 300) : item.text}
-                </Text>
-                <Pressable onPress={() => {
-                  item.seeMore = true
-                }} className="ms-3">
-                  <Text>...see more</Text>
-                </Pressable>
-              </View>
-              <View className="border-2 border-gray-200">
-                <Image source={Placeholder} style={{
-                  width: width
-                }} resizeMode='contain' />
-              </View>
-              <View style={{ flexDirection: "row" }} className="justify-between">
-                <Ionicons className="p-4" size={20} name='thumbs-up-outline' />
-                <Ionicons className="p-4" size={20} name='chatbox-ellipses-outline' />
-                <Ionicons className="p-4" size={20} name='arrow-redo-outline' />
-              </View>
-            </View>
+            <PostCard item={item} />
           )}
         // ListHeaderComponent={()=>(
         //   <View className="items-center justify-between" style={{flexDirection:"row"}}>

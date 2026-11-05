@@ -5,7 +5,7 @@ import Animated, { FadeInUp, useAnimatedStyle, useSharedValue, withTiming } from
 import Logo from "../../assets/images/logo.png"
 import { Redirect } from "expo-router";
 export default function Index() {
-  const [ready, setReady] = useState(true)
+  const [ready, setReady] = useState(false)
   const { width } = Dimensions.get("window")
   const pulse = useSharedValue(10)
   const pulseStyle = useAnimatedStyle(() => ({
