@@ -6,7 +6,11 @@ import { ResourceProvider } from "../contexts/resourceProvider"
 const AppLayout = () => {
   return (
     <ResourceProvider>
-      <Stack screenOptions={{ headerShown: false }} />
+      <Stack screenOptions={{ headerShown: false }}>
+        <Stack.Screen name='post/[id]' options={{
+          headerShown: false,
+        }} />
+      </Stack>
     </ResourceProvider>
   )
 }

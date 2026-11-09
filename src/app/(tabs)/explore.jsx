@@ -99,13 +99,23 @@ const VideoFeedItem = ({
     { currentTime: player.currentTime }
   );
 
-  const { status } = useEvent(
+  const { status, error } = useEvent(
     player,
-    'statusChange',
-    { status: player.status }
+    "statusChange",
+    {
+      status: player.status,
+      error: null
+    }
   );
 
-  const [showControls, setShowControls] = useState(true);
+  useEffect(() => {
+    if (status === "error") {
+      console.log("VIDEO PLAYBACK ERROR:", error);
+      console.log("VIDEO URL:", item.uri);
+    }
+  }, [status, error, item.uri]);
+
+  const [showControls, setShowControls] = useState(false);
   const [showHeart, setShowHeart] = useState(false);
   const [trackWidth, setTrackWidth] = useState(0);
 
@@ -336,12 +346,13 @@ const VideoFeedItem = ({
 
       {/* CENTRAL VIDEO CONTROLS */}
 
-      {(!isPlaying || showControls) && (
+      {/* CENTRAL VIDEO CONTROLS */}
+
+      {!isPlaying && (
         <View
           pointerEvents="box-none"
           className="absolute inset-0 items-center justify-center z-30"
         >
-
           <View className="flex-row items-center gap-10">
 
             {/* BACKWARD */}
@@ -362,8 +373,7 @@ const VideoFeedItem = ({
               </Text>
             </Pressable>
 
-
-            {/* PLAY / PAUSE */}
+            {/* PLAY */}
 
             <Pressable
               onPress={togglePlayback}
@@ -371,12 +381,11 @@ const VideoFeedItem = ({
               hitSlop={12}
             >
               <Ionicons
-                name={isPlaying ? 'pause' : 'play'}
+                name="play"
                 size={36}
                 color="white"
               />
             </Pressable>
-
 
             {/* FORWARD */}
 
@@ -397,7 +406,6 @@ const VideoFeedItem = ({
             </Pressable>
 
           </View>
-
         </View>
       )}
 
@@ -576,11 +584,10 @@ const CarouselFeedItem = ({ item }) => {
         {images.map((_, index) => (
           <View
             key={index}
-            className={`h-1.5 rounded-full ${
-              activeIndex === index
+            className={`h-1.5 rounded-full ${activeIndex === index
                 ? 'w-4 bg-white'
                 : 'w-1.5 bg-white/50'
-            }`}
+              }`}
           />
         ))}
       </View>
