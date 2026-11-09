@@ -6,7 +6,7 @@ import { Image, Pressable, Text } from 'react-native'
 import { View } from 'react-native'
 const TabsLayout = () => {
   return (
-    <Tabs screenOptions={{ headerShown: true }}>
+    <Tabs screenOptions={{ headerShown: true, tabBarShowLabel: false }}>
       <Tabs.Screen name='home' options={{
         headerTitle: () => (
           <Image source={Logo} style={{
@@ -20,18 +20,18 @@ const TabsLayout = () => {
         headerRight: () => (
           <>
             {/* <View className="flex"> */}
-            <Pressable onPress={null}>
+            {/* <Pressable onPress={null}>
               <Ionicons name='menu' size={30} style={{
                 padding: 5,
                 borderWidth: 0,
                 marginRight: 2,
                 borderRadius: 50
               }} />
-            </Pressable>
+            </Pressable> */}
             {/* <Ionicons name='menu' size={20} className="border rounded-full p-3 m-3" /> */}
             {/* </View> */}
           </>
-        )
+        ),
       }} />
       <Tabs.Screen name='explore' options={{
         tabBarIcon: ({ focused }) => (

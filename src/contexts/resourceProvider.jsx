@@ -11,6 +11,7 @@ export const ResourceProvider = ({ children }) => {
         }
         prepare();
     }, [])
+
     const blogs = [
         {
             id: "blog-1",
@@ -121,23 +122,19 @@ export const ResourceProvider = ({ children }) => {
             updatedAt: "2026-11-05T11:45:00.000Z"
         }
     ];
-
-
     const feedData = [
         {
             id: "1",
             type: "video",
             title: "Store Grand Opening Highlight",
             description: "Come see how we kicked off our brand new location! 🚀",
-            uri: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
+            uri: "https://storage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
             images: [],
             thumbnail: "https://images.unsplash.com/photo-1441986300917-64674bd600d8?w=1200&auto=format&fit=crop",
             likes: 1240,
             comments: 45,
             shares: 18,
             views: 8200,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-09T08:00:00.000Z",
             user: {
                 id: "storepilot-official",
@@ -157,8 +154,6 @@ export const ResourceProvider = ({ children }) => {
             comments: 12,
             shares: 5,
             views: 1900,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-08T14:20:00.000Z",
             user: {
                 id: "urban-threads",
@@ -182,8 +177,6 @@ export const ResourceProvider = ({ children }) => {
             comments: 29,
             shares: 14,
             views: 4600,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-07T12:10:00.000Z",
             user: {
                 id: "ecocraft-store",
@@ -196,15 +189,13 @@ export const ResourceProvider = ({ children }) => {
             type: "video",
             title: "Quick Packing Routine",
             description: "Watch how we prepare customer orders carefully before dispatch.",
-            uri: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
+            uri: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerBlazes.mp4",
             images: [],
             thumbnail: "https://images.unsplash.com/photo-1586522868346-7b3f6f9e3c2b?w=1200&auto=format&fit=crop",
             likes: 540,
             comments: 18,
             shares: 9,
             views: 3100,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-06T16:45:00.000Z",
             user: {
                 id: "storepilot-official",
@@ -224,8 +215,6 @@ export const ResourceProvider = ({ children }) => {
             comments: 8,
             shares: 3,
             views: 1100,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-05T09:30:00.000Z",
             user: {
                 id: "storepilot-official",
@@ -248,8 +237,6 @@ export const ResourceProvider = ({ children }) => {
             comments: 16,
             shares: 7,
             views: 2500,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-04T15:00:00.000Z",
             user: {
                 id: "urban-threads",
@@ -262,15 +249,13 @@ export const ResourceProvider = ({ children }) => {
             type: "video",
             title: "A Look Inside Our Store",
             description: "Take a short tour and discover what is available in our store.",
-            uri: "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+            uri: "https://storage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
             images: [],
             thumbnail: "https://images.unsplash.com/photo-1604712566247-460e8e7c5c9f?w=1200&auto=format&fit=crop",
             likes: 690,
             comments: 24,
             shares: 11,
             views: 3900,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-03T10:15:00.000Z",
             user: {
                 id: "ecocraft-store",
@@ -290,8 +275,6 @@ export const ResourceProvider = ({ children }) => {
             comments: 14,
             shares: 6,
             views: 2100,
-            isLiked: false,
-            isSaved: false,
             createdAt: "2026-11-02T13:40:00.000Z",
             user: {
                 id: "storepilot-official",
@@ -300,6 +283,7 @@ export const ResourceProvider = ({ children }) => {
             }
         }
     ];
+
     return (
         <ResourceContext.Provider value={{ blogs, feedData, loading }}>
             {children}
